@@ -5,7 +5,8 @@ const $ = require('jquery');
 
 const url = 'http://localhost:4000';
 
-var $closeButton, $colorButton, $rollButton, $stopButton, $speedButton = undefined;
+var $closeButton, $colorButton, $rollButton, $stopButton,
+    $speedButton, $discoButton = undefined;
 var speed = 0;
 
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -16,23 +17,30 @@ const wireUpButtons = () => {
 
   $closeButton = $('#close-window');
   $colorButton = $('#color-button');
+//  $colorRedButton = $('#color-red-button');
   $rollButton = $('#roll-button');
   $stopButton = $('#stop-button');
   $speedButton = $('#speed-button');
+  $discoButton = $('#disco-button');
 
   $closeButton.on('click', function() {
     ipcRenderer.send('close-app');
   });
 
-  $colorButton.on('click', colorButtonClick);
+  $colorButton.on('click', function() {
+    colorButtonClick("blue");
+  });
+
+  //$colorRedButton.on('click', colorButtonClick("red"));
   $rollButton.on('click', rollButtonClick);
   $speedButton.on('click', speedButtonClick);
   $stopButton.on('click', stopButtonClick);
+  $discoButton.on('click', discoButtonClick);
 }
 
-const colorButtonClick = function () {
+function colorButtonClick(color) {
 
-  console.log("yo");
+  console.log("color changed to " + color);
 
   // curl -v -H "Content-Type: application/json" -X POST -d
   // '{"mode":"sphero","command":"color","value": "yellow"}'
@@ -50,10 +58,7 @@ const colorButtonClick = function () {
     })
   });
 
-  window.fetch(request).then(function(response) {return response.status;})
-    .then(function(status) {
-      console.log(status);
-    });
+  askBB8(request);
 };
 
 const rollButtonClick = function () {
@@ -71,9 +76,7 @@ const rollButtonClick = function () {
 
   console.log(speed);
 
-  window.fetch(request).then(function(response) {return response.status;}).then(function(status) {
-    console.log(status);
-  });
+  askBB8(request);
 }
 
 const speedButtonClick = function () {
@@ -94,6 +97,27 @@ const stopButtonClick = function () {
     })
   });
 
+  askBB8(request);
+}
+
+const discoButtonClick = function () {
+  console.log("disco party!");
+
+  var request = new Request(url, {
+    method: 'POST',
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify({
+      "mode": "custom",
+      "command": "disco"
+    })
+  });
+
+  askBB8(request);
+}
+
+function askBB8(request) {
   window.fetch(request).then(function(response) {return response.status;})
     .then(function(status) {
       console.log(status);
