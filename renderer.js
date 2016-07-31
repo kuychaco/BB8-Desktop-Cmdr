@@ -5,9 +5,10 @@ const $ = require('jquery');
 
 const url = 'http://localhost:4000';
 
-var $closeButton, $colorButton, $rollButton, $stopButton,
-    $speedButton, $discoButton, $colorRedButton = undefined;
-var speed = 0;
+var $colorButton, $colorRedButton, $stopButton, $discoButton,
+    $0Button, $90Button, $180Button, $270Button = undefined;
+
+var currentHeading = 0;
 
 document.addEventListener("DOMContentLoaded", function(event) {
   wireUpButtons();
@@ -15,17 +16,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 const wireUpButtons = () => {
 
-  $closeButton = $('#close-window');
   $colorButton = $('#color-button');
   $colorRedButton = $('#color-red-button');
-  $rollButton = $('#roll-button');
   $stopButton = $('#stop-button');
-  $speedButton = $('#speed-button');
   $discoButton = $('#disco-button');
-
-  $closeButton.on('click', function() {
-    ipcRenderer.send('close-app');
-  });
+  $0Button = $('#0-button');
+  $90Button = $('#90-button');
+  $180Button = $('#180-button');
+  $270Button = $('#270-button');
 
   $colorButton.on('click', function() {
     colorButtonClick("blue");
@@ -35,10 +33,13 @@ const wireUpButtons = () => {
     colorButtonClick("red");
   });
 
-  $rollButton.on('click', rollButtonClick);
-  $speedButton.on('click', speedButtonClick);
-  $stopButton.on('click', stopButtonClick);
   $discoButton.on('click', discoButtonClick);
+
+  $0Button.on('click', _0ButtonClick);
+  $90Button.on('click', _90ButtonClick);
+  $180Button.on('click', _180ButtonClick);
+  $270Button.on('click', _270ButtonClick);
+  $stopButton.on('click', stopButtonClick);
 }
 
 function colorButtonClick(color) {
@@ -64,45 +65,6 @@ function colorButtonClick(color) {
   askBB8(request);
 };
 
-const rollButtonClick = function () {
-  var request = new Request(url, {
-    method: 'POST',
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    }),
-    body: JSON.stringify({
-      "mode": "sphero",
-      "command": "roll",
-      "value": [1,speed]
-    })
-  });
-
-  console.log(speed);
-
-  askBB8(request);
-}
-
-const speedButtonClick = function () {
-  speed++;
-  document.querySelector('#speed').textContent = speed;
-}
-
-const stopButtonClick = function () {
-  var request = new Request(url, {
-    method: 'POST',
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    }),
-    body: JSON.stringify({
-      "mode": "sphero",
-      "command": "roll",
-      "value": [0,0]
-    })
-  });
-
-  askBB8(request);
-}
-
 const discoButtonClick = function () {
   console.log("disco party!");
 
@@ -118,6 +80,51 @@ const discoButtonClick = function () {
   });
 
   askBB8(request);
+}
+
+const stopButtonClick = function () {
+  var request = createRollRequest(0, currentHeading);
+  askBB8(request);
+}
+
+const _0ButtonClick = function () {
+  currentHeading = 0;
+  var request = createRollRequest(2, currentHeading);
+  askBB8(request);
+}
+
+const _90ButtonClick = function () {
+  currentHeading = 90;
+  var request = createRollRequest(2, currentHeading);
+  askBB8(request);
+}
+
+const _180ButtonClick = function () {
+  currentHeading = 180;
+  var request = createRollRequest(2, currentHeading);
+  askBB8(request);
+}
+
+const _270ButtonClick = function () {
+  currentHeading = 270;
+  var request = createRollRequest(2, currentHeading);
+  askBB8(request);
+}
+
+function createRollRequest(speed, heading) {
+  var request = new Request(url, {
+    method: 'POST',
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify({
+      "mode": "sphero",
+      "command": "roll",
+      "value": [speed, heading]
+    })
+  });
+
+  return request
 }
 
 function askBB8(request) {

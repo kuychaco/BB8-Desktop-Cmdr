@@ -1,5 +1,6 @@
 <head>
   <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="index.css">
   <script>
     window.jQuery = window.$ = require('./node_modules/jquery/dist/jquery.min.js');
   </script>
@@ -14,13 +15,28 @@
     <button id="color-button" type="button" class="btn btn-default">Turn Blue</button>
     <button id="color-red-button" type="button" class="btn btn-default">Turn Red</button>
 
-    <button id="roll-button" type="button" class="btn btn-default">Roll</button>
-
     <button id="disco-button" type="button" class="btn btn-default">Disco</button>
-
-    <button id="stop-button" type="button" class="btn btn-default">Stop</button>
     <button id="speed-button" type="button" class="btn btn-default">Speed up</button>
   </div>
+<br>
+<br>
+  <table align="center">
+    <tr>
+      <td></td>
+      <td><button id="0-button" type="button" class="btn btn-default">0</button></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><button id="270-button" type="button" class="btn btn-default">270</button></td>
+      <td><button id="stop-button" type="button" class="btn btn-default">Stop</button></td>
+      <td><button id="90-button" type="button" class="btn btn-default">90</button></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><button id="180-button" type="button" class="btn btn-default">180</button></td>
+      <td></td>
+    </tr>
+  </table>
 
   <h2>Current Speed:</h2><h2 id="speed">0</h2>
 </body>
