@@ -20,10 +20,10 @@ const wireUpButtons = () => {
   $colorRedButton = $('#color-red-button');
   $stopButton = $('#stop-button');
   $discoButton = $('#disco-button');
-  $0Button = $('#0-button');
-  $90Button = $('#90-button');
-  $180Button = $('#180-button');
-  $270Button = $('#270-button');
+  $0Button = $('#zero-button');
+  $90Button = $('#ninty-button');
+  $180Button = $('#oneeighty-button');
+  $270Button = $('#twoseventy-button');
 
   $colorButton.on('click', function() {
     colorButtonClick("blue");

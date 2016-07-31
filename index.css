@@ -3,7 +3,7 @@ td {
   vertical-align: middle;
 }
 
-#left-button, #right-button, #forward-button, #back-button {
+#zero-button, #ninty-button, #oneeighty-button, #twoseventy-button {
   background-color: Blue;
   color: White;
 }
