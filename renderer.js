@@ -6,7 +6,7 @@ const $ = require('jquery');
 const url = 'http://localhost:4000';
 
 var $closeButton, $colorButton, $rollButton, $stopButton,
-    $speedButton, $discoButton = undefined;
+    $speedButton, $discoButton, $colorRedButton = undefined;
 var speed = 0;
 
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -17,7 +17,7 @@ const wireUpButtons = () => {
 
   $closeButton = $('#close-window');
   $colorButton = $('#color-button');
-//  $colorRedButton = $('#color-red-button');
+  $colorRedButton = $('#color-red-button');
   $rollButton = $('#roll-button');
   $stopButton = $('#stop-button');
   $speedButton = $('#speed-button');
@@ -31,7 +31,10 @@ const wireUpButtons = () => {
     colorButtonClick("blue");
   });
 
-  //$colorRedButton.on('click', colorButtonClick("red"));
+  $colorRedButton.on('click', function() {
+    colorButtonClick("red");
+  });
+
   $rollButton.on('click', rollButtonClick);
   $speedButton.on('click', speedButtonClick);
   $stopButton.on('click', stopButtonClick);
@@ -54,7 +57,7 @@ function colorButtonClick(color) {
     body: JSON.stringify({
       "mode": "sphero",
       "command": "color",
-      "value": "blue"
+      "value": color
     })
   });
 
